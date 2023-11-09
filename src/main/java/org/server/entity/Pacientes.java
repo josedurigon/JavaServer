@@ -7,6 +7,7 @@ public class Pacientes {
     private String Endereco;
     private String Contato;
     private String Historico_Medico;
+    private int prioridade;
 
 
     public String getId() {
@@ -23,6 +24,10 @@ public class Pacientes {
 
     public void setNome(String nome) {
         Nome = nome;
+    }
+
+    public void setPrioridade(int prioridade){
+        this.prioridade = prioridade;
     }
 
     public String getEndereco() {
@@ -48,5 +53,5 @@ public class Pacientes {
     public void setHistorico_Medico(String historico_Medico) {
         Historico_Medico = historico_Medico;
     }
-    
+
 }
