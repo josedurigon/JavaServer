@@ -1,4 +1,4 @@
-package org.server.negocio.repository;
+package org.server.dao.repository;
 import com.mongodb.ClientSessionOptions;
 import com.mongodb.client.*;
 import com.mongodb.connection.ClusterDescription;
@@ -6,8 +6,8 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 
 import java.util.List;
-
-public class PacienteRepository implements MongoClient {
+//https://www.mongodb.com/docs/drivers/java/sync/current/usage-examples/findOne/
+public class MedicoRepository implements MongoClient {
     @Override
     public MongoDatabase getDatabase(String s) {
         return null;
