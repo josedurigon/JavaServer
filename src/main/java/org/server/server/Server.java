@@ -1,4 +1,4 @@
-package org.example;
+package org.server.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -15,15 +15,12 @@ public class Server
 
     public void start() {
         try {
-            // Create a server socket that listens on the specified port
             serverSocket = new ServerSocket(port);
             System.out.println("Server is listening on port " + port);
 
             while (true) {
-                // Accept incoming client connections
                 Socket clientSocket = serverSocket.accept();
 
-                // Create a new thread to handle each client connection
                 ClientHandler clientHandler = new ClientHandler(clientSocket);
                 clientHandler.start();
             }

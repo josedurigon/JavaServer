@@ -1,4 +1,4 @@
-package org.example.negocio;
+package org.server.negocio;
 
 public class ServerNegocio {
 }

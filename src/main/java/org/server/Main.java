@@ -1,4 +1,6 @@
-package org.example;
+package org.server;
+
+import org.server.server.Server;
 
 public class Main {
     public static void main(String[] args) {
