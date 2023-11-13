@@ -6,37 +6,49 @@ import java.net.Socket;
 
 public class Server
 {
-    private ServerSocket serverSocket;
-    private int port;
+   private ServerSocket serverSocket;
 
-    public Server(int port) {
-        this.port = port;
-    }
+   public Server(ServerSocket serverSocket){
+       this.serverSocket = serverSocket;
+   }
 
-    public void start() {
-        try {
-            serverSocket = new ServerSocket(port);
-            System.out.println("Server is listening on port " + port);
+   public void StartServer(){
+       try {
+           while (!serverSocket.isClosed()) {
+               Socket socket = serverSocket.accept();
+               System.out.println("A new client has connected");
+               ClientHandler clientHandler = new ClientHandler(socket);
 
-            while (true) {
-                Socket clientSocket = serverSocket.accept();
+               Thread thread = new Thread(clientHandler);
+               thread.start();
 
-                ClientHandler clientHandler = new ClientHandler(clientSocket);
-                clientHandler.start();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+           }
+       }catch (IOException e){
+
+
         }
-    }
 
-    public void stop() {
-        try {
-            if (serverSocket != null && !serverSocket.isClosed()) {
-                serverSocket.close();
-                System.out.println("Server has been stopped.");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+   }
+
+   public void CloseServerSocket(){
+       try {
+           if (!serverSocket.isClosed()) {
+               serverSocket.close();
+           }
+           else{
+               throw new RuntimeException("Socket ja está fechado!!");
+           }
+       }
+       catch (IOException e){
+           e.printStackTrace();
+       }
+   }
 }
+
+//Na main
+/*
+* public static void Main(String [] args){
+*   ServerSocket serverSocket = new ServerSocket(123456);
+* }
+* */
+
