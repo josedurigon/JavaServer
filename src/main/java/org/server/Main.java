@@ -2,13 +2,16 @@ package org.server;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import org.server.server.Server;
-
+import org.bson.Document;
 import java.io.IOException;
 import java.net.ServerSocket;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        ServerSocket serverSocket = new ServerSocket(8080);
+        int port = 8080;
+        System.out.println("Server is active on port: "+port+". http://localhost:8080");
+
+        ServerSocket serverSocket = new ServerSocket(port);
         Server server = new Server(serverSocket);
         server.StartServer();
         Dotenv dotenv = Dotenv.configure().load();

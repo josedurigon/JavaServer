@@ -37,14 +37,6 @@ public class Fila {
         Patient_Id = patient_Id;
     }
 
-    public int getPriority() {
-        return Priority;
-    }
-
-    public void setPriority(int priority) {
-        Priority = priority;
-    }
-
     public String getStatus() {
         return Status;
     }
@@ -69,11 +61,5 @@ public class Fila {
         Nome = nome;
     }
 
-    public String getSetor() {
-        return Setor;
-    }
 
-    public void setSetor(String setor) {
-        Setor = setor;
-    }
 }

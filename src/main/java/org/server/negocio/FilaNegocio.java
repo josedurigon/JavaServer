@@ -1,84 +1,63 @@
 package org.server.negocio;
 
+import org.server.entity.Fila;
+import org.server.entity.Pacientes;
+
 import java.util.*;
 
-public class FilaNegocio extends PriorityQueue {
-
+public class FilaNegocio extends Fila {
+    private int size;
+    private ArrayList<Pacientes> pacientesFila;
     public FilaNegocio() {
+        ArrayList<Pacientes> pacientesFila = new ArrayList<>();
     }
 
-    public FilaNegocio(int initialCapacity) {
-        super(initialCapacity);
+    public int getSize(){
+        return pacientesFila.size();
     }
 
-    public FilaNegocio(Comparator comparator) {
-        super(comparator);
+    public void add(Pacientes paciente){
+        if(paciente != null){
+            if(pacientesFila != null) {
+                pacientesFila.add(paciente);
+            }
+            throw new RuntimeException("Não existe fila");
+        }
+        throw new IllegalArgumentException("Paciente não existe");
+    }
+    public void remover(Integer index){
+        if(index instanceof Integer){
+            if(index>-1){
+                pacientesFila.remove(index);
+            }
+        }
+        else{
+            throw new IllegalArgumentException("Index inválido");
+        }
+    }
+    public void update(String nome, Pacientes novo) throws Exception {
+        if(!nome.isBlank()) {
+            Integer indexUpdate = getPacienteNaFila(nome);
+            pacientesFila.set(indexUpdate, novo);
+        }
     }
 
-    public FilaNegocio(int initialCapacity, Comparator comparator) {
-        super(initialCapacity, comparator);
+    public Integer getPacienteNaFila(String nome) throws Exception {
+        for (int i=0; i< pacientesFila.size(); i++){
+            if(Objects.equals(pacientesFila.get(i).getNome(), nome)){
+                return i;
+            }
+        }
+        throw new Exception("Paciente não está na lista");
     }
 
-    public FilaNegocio(Collection c) {
-        super(c);
-    }
-
-    public FilaNegocio(PriorityQueue c) {
-        super(c);
-    }
-
-    public FilaNegocio(SortedSet c) {
-        super(c);
-    }
-
-    @Override
-    public boolean add(Object o) {
-        return super.add(o);
-    }
-
-    @Override
-    public Object peek() {
-        return super.peek();
-    }
-
-    @Override
-    public boolean remove(Object o) {
-        return super.remove(o);
-    }
-
-    @Override
-    public boolean contains(Object o) {
-        return super.contains(o);
-    }
-
-    @Override
-    public Object[] toArray() {
-        return super.toArray();
-    }
-
-    @Override
-    public Iterator iterator() {
-        return super.iterator();
-    }
-
-    @Override
-    public int size() {
-        return super.size();
-    }
-
-    @Override
-    public void clear() {
-        super.clear();
-    }
-
-    @Override
-    public Object poll() {
-        return super.poll();
-    }
-
-    @Override
-    public Comparator comparator() {
-        return super.comparator();
+    public Pacientes pop(){
+        if(!pacientesFila.isEmpty()){
+            Pacientes proximo = pacientesFila.get(0);
+            pacientesFila.remove(0);
+            return proximo;
+        }
+        throw new RuntimeException("Fila vazia!!");
     }
 
     //Parte logica aqui abaixo

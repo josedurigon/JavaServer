@@ -1,4 +1,5 @@
 package org.server.dao.repository;
+
 import com.mongodb.*;
 import com.mongodb.bulk.BulkWriteResult;
 import com.mongodb.client.*;
@@ -11,10 +12,9 @@ import com.mongodb.connection.ClusterDescription;
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.conversions.Bson;
-
 import java.util.List;
-//https://www.mongodb.com/docs/drivers/java/sync/current/usage-examples/findOne/
-public class MedicoRepository implements MongoCollection {
+
+public class FilaRepository implements MongoCollection {
 
     @Override
     public MongoNamespace getNamespace() {
