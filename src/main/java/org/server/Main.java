@@ -12,8 +12,8 @@ import java.net.ServerSocket;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        int port = 8080;
-        System.out.println("Server is active on port: "+port+". http://localhost:8080");
+        int port = 8088;
+        System.out.println("Server is active on port: "+port+". http://localhost:8088");
 
         ServerSocket serverSocket = new ServerSocket(port);
         Server server = new Server(serverSocket);
