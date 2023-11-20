@@ -27,7 +27,8 @@ public class Client {
     public void sendObject() {
         try {
 
-            objectOutputStream.writeObject(object);
+            Object obj = null;//Apenas para compilar
+            objectOutputStream.writeObject(obj);
             objectOutputStream.flush();
 
             Scanner scanner = new Scanner(System.in);
