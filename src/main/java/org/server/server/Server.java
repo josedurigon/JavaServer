@@ -1,15 +1,16 @@
 package org.server.server;
 
+import org.server.entity.Pacientes;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Timer;
 
 public class Server
 {
    private ServerSocket serverSocket;
-
-
    public Server(ServerSocket serverSocket){
        this.serverSocket = serverSocket;
    }
@@ -19,18 +20,43 @@ public class Server
            while (!serverSocket.isClosed()) {
                Socket socket = serverSocket.accept();
                System.out.println("A new client has connected");
-               ClientHandler clientHandler = new ClientHandler(socket);
 
+               ObjectInputStream is = new ObjectInputStream(socket.getInputStream());
+               ObjectOutputStream os = new ObjectOutputStream(socket.getOutputStream());
+
+               Pacientes paciente = (Pacientes)is.readObject();
+
+               ClientHandler clientHandler = new ClientHandler(socket);
                Thread thread = new Thread(clientHandler);
-               thread.start();
+               thread.start();  // Start the thread first
 
            }
        }catch (IOException e){
 
 
-        }
+        } catch (ClassNotFoundException e) {
+           throw new RuntimeException(e);
+       }
 
    }
+
+   public void handleClientConnection(Socket clientSocket){
+       try (ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream())) {
+           // Read the Pacientes object from the client
+           Pacientes receivedPacientes = (Pacientes) objectInputStream.readObject();
+
+           // Process the received object
+           processReceivedObject(receivedPacientes);
+
+       } catch (IOException | ClassNotFoundException e) {
+           e.printStackTrace();
+       }
+   }
+
+    private void processReceivedObject(Pacientes pacientes) {
+        // Implement your logic to process the received Pacientes object
+        System.out.println("Received Pacientes object: " + pacientes.getNome());
+    }
 
    public void CloseServerSocket(){
        try {

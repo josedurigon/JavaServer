@@ -1,14 +1,23 @@
 package org.server.entity;
 
-public class Pacientes {
+import java.io.Serializable;
+
+public class Pacientes implements Serializable {
 
     private String Id;
     private String Nome;
     private String Endereco;
     private String Contato;
     private String Historico_Medico;
-    private int prioridade;
 
+    public Pacientes(String nome, String endereco, String contato, String historico_Medico) {
+        this.Id = null;
+        this.Nome = nome;
+        this.Endereco = endereco;
+        this.Contato = contato;
+        this.Historico_Medico = historico_Medico;
+    }
+    public Pacientes(){}
 
     public String getId() {
         return Id;
@@ -24,10 +33,6 @@ public class Pacientes {
 
     public void setNome(String nome) {
         Nome = nome;
-    }
-
-    public void setPrioridade(int prioridade){
-        this.prioridade = prioridade;
     }
 
     public String getEndereco() {
