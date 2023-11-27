@@ -1,77 +1,43 @@
 package com.example.demo.server;
 
-import java.io.*;
+import com.example.demo.Models.Pacientes;
+import com.example.demo.repository.PacienteRepository;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
 
-public class ClientHandler implements Runnable {
-
-    public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
+public class ClientHandler implements Runnable{
     private Socket socket;
-    private ObjectInput objectInput;
     private ObjectOutputStream objectOutputStream;
-
-    public ClientHandler(Socket socket) {
-        try {
-            this.socket = socket;
-            this.objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-            this.objectInput = new ObjectInputStream(socket.getInputStream());
-
-            clientHandlers.add(this);
-        } catch (IOException e) {
-            closeEverything(socket, objectInput, objectOutputStream);
-        }
+    private ObjectInputStream objectInputStream;
+    public ClientHandler(Socket socket){
+        this.socket = socket;
     }
-
     @Override
-    public void run() {
-        try {
-            while (socket.isConnected()) {
-                // Read the object from the client
-                Object receivedObject = objectInput.readObject();
+    public void run(){
 
-                // Process the received object (you can customize this part)
-                processReceivedObject(receivedObject);
-            }
-        } catch (IOException | ClassNotFoundException e) {
-            closeEverything(socket, objectInput, objectOutputStream);
-        }
-    }
+        try{
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectInputStream = new ObjectInputStream(socket.getInputStream());
+            while (true){
+                Pacientes receivedObject = (Pacientes) objectInputStream.readObject();
+                System.out.println("Received object: " + receivedObject.getNome());
+                //processa o objeto
 
-    private void processReceivedObject(Object receivedObject) {
-        // Implement your logic to process the received object
-        System.out.println("Received object: " + receivedObject.toString());
-    }
-
-    public void sendObject(Object object) {
-        try {
-            if (object != null) {
-                objectOutputStream.writeObject(object);
+                objectOutputStream.writeObject("Server received" + receivedObject.getNome());
                 objectOutputStream.flush();
             }
-        } catch (IOException e) {
-            closeEverything(socket, objectInput, objectOutputStream);
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public void removeClientHandler() {
-        clientHandlers.remove(this);
-    }
+    public boolean insert(Pacientes paciente){
 
-    public void closeEverything(Socket socket, ObjectInput objectInput, ObjectOutputStream objectOutputStream) {
-        removeClientHandler();
-        try {
-            if (objectInput != null) {
-                objectInput.close();
-            }
-            if (objectOutputStream != null) {
-                objectOutputStream.close();
-            }
-            if (socket != null) {
-                socket.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        PacienteRepository pacienteRepository = new PacienteRepository("Pacientes");
+        pacienteRepository.insertOne(paciente);
     }
 }

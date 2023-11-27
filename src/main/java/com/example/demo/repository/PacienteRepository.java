@@ -1,4 +1,5 @@
 package com.example.demo.repository;
+import com.example.demo.Models.Pacientes;
 import com.mongodb.*;
 import com.mongodb.bulk.BulkWriteResult;
 import com.mongodb.client.*;
@@ -10,10 +11,30 @@ import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.conversions.Bson;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public class PacienteRepository implements MongoCollection {
+
+    private final MongoCollection<Document> pacientesCollection;
+
+    
+
+    @Autowired
+    public PacienteRepository(MongoCollection<Document> pacientesCollection) {
+        this.pacientesCollection = pacientesCollection;
+    }
+
+    public void savePaciente(Pacientes pacientes){
+        Document document = new Document()
+                .append("nome",pacientes.getNome())
+                .append("endereco", pacientes.getEndereco())
+                .append("contato", pacientes.getContato())
+                .append("historico_medico", pacientes.getHistorico_medico());
+        pacientesCollection.insertOne(document);
+    }
+
 
     @Override
     public MongoNamespace getNamespace() {
@@ -724,4 +745,5 @@ public class PacienteRepository implements MongoCollection {
     public MongoCollection withDocumentClass(Class aClass) {
         return null;
     }
+
 }

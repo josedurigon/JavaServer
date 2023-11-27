@@ -19,19 +19,22 @@ public class Server_ {
 
     public void run(int port) throws IOException, ClassNotFoundException {
         serverSocket = new ServerSocket(port);
-        socket = serverSocket.accept();
-        System.out.println("Client connected");
 
-        objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-        objectInputStream = new ObjectInputStream(socket.getInputStream());
+        while(true) {
+                if(!serverSocket.isClosed()) {
+                    socket = serverSocket.accept();
+                    System.out.println("Client connected");
+                    //
+                    //            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                    //            objectInputStream = new ObjectInputStream(socket.getInputStream());
 
+                    Thread clientThread = new Thread(new ClientHandler(socket));
+                    clientThread.start();
 
-        try{
-            Pacientes receivedObject = (Pacientes) objectInputStream.readObject();
-            System.out.println(receivedObject.getNome());
-            System.out.println(receivedObject.getEndereco());
-        }catch(IOException e){
-            System.out.println(e.getMessage());
+//                    Pacientes receivedObject = (Pacientes) objectInputStream.readObject();
+//                    System.out.println(receivedObject.getNome());
+//                    System.out.println(receivedObject.getEndereco());
+                }
         }
 
     }
