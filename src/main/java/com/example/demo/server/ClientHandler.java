@@ -37,7 +37,7 @@ public class ClientHandler implements Runnable{
     public boolean insert(Pacientes paciente){
 
 
-        PacienteRepository pacienteRepository = new PacienteRepository("Pacientes");
-        pacienteRepository.insertOne(paciente);
+//        PacienteRepository pacienteRepository = new PacienteRepository("Pacientes");
+//        pacienteRepository.insertOne(paciente);
     }
 }

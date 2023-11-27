@@ -19,7 +19,7 @@ public class PacienteRepository implements MongoCollection {
 
     private final MongoCollection<Document> pacientesCollection;
 
-    
+
 
     @Autowired
     public PacienteRepository(MongoCollection<Document> pacientesCollection) {

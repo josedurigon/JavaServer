@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.mongo.MongoDb;
 import com.example.demo.server.Server_;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
@@ -23,13 +24,14 @@ public class Main {
         Server_ server = new Server_();
         server.run(8088);
 
+//
+//        Dotenv dotenv = Dotenv.configure().load();
+//        String mongodbUri = dotenv.get("MONGODB_URI");
+//        MongoClient mongoClient = MongoClients.create(mongodbUri);
+//        MongoDatabase database = mongoClient.getDatabase("ProjetointegradorIV");
+//        // Use mongodbUri in your MongoDB connection logic
+        MongoDb mongoDb = new MongoDb("ProjetointegradorIV");
 
-        Dotenv dotenv = Dotenv.configure().load();
-        String mongodbUri = dotenv.get("MONGODB_URI");
-        MongoClient mongoClient = MongoClients.create(mongodbUri);
-        MongoDatabase database = mongoClient.getDatabase("ProjetointegradorIV");
-        // Use mongodbUri in your MongoDB connection logic
-        System.out.println("MongoDB URI: " + mongodbUri);
 
 
     }
