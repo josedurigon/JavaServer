@@ -1,4 +1,4 @@
-package org.server.server;
+package com.example.demo.server;
 
 import java.io.*;
 import java.net.Socket;

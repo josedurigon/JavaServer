@@ -1,6 +1,8 @@
-package org.server.entity;
+package com.example.demo.Models;
 
-public class Medicos {
+import java.io.Serializable;
+
+public class Medicos implements Serializable {
 
     private String Id;
     private String Nome;

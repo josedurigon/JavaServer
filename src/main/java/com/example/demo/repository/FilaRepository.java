@@ -1,4 +1,4 @@
-package org.server.dao.repository;
+package com.example.demo.repository;
 
 import com.mongodb.*;
 import com.mongodb.bulk.BulkWriteResult;
@@ -8,7 +8,6 @@ import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.InsertManyResult;
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
-import com.mongodb.connection.ClusterDescription;
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.conversions.Bson;

@@ -1,4 +1,4 @@
-package org.server.constantes;
+package com.example.demo.constantes;
 
 public enum PrioridadeEnum {
 

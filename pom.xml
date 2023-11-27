@@ -28,14 +28,38 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.32</version> <!-- Use the appropriate version -->
+            <version>1.7.32</version> <!-- Use the latest version -->
         </dependency>
+
+
+            <!-- Other dependencies -->
+<!--        <dependency>-->
+<!--            <groupId>com.example</groupId>-->
+<!--            <artifactId>demo</artifactId>-->
+<!--            <version>1.0.0-SNAPSHOT</version>-->
+<!--        </dependency>-->
+        <!-- Logback as the logging implementation -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version> <!-- Use the appropriate version -->
+            <version>1.2.3</version> <!-- Use the latest version -->
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+            <version>4.1.5</version>
+        </dependency>
+
+
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -48,7 +72,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>org.server.Main</mainClass>
+                            <mainClass>com.example.demo.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

@@ -1,4 +1,4 @@
-package org.server.entity;
+package com.example.demo.Models;
 
 
 import java.util.Date;

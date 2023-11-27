@@ -1,7 +1,7 @@
-package org.server.negocio;
+package com.example.demo.negocio;
 
-import org.server.entity.Fila;
-import org.server.entity.Pacientes;
+import com.example.demo.Models.Fila;
+import com.example.demo.Models.Pacientes;
 
 import java.util.*;
 

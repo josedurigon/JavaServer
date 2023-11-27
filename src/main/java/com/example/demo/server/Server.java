@@ -1,7 +1,7 @@
-package org.server.server;
+package com.example.demo.server;
 
-import org.server.entity.Pacientes;
-import java.io.DataInputStream;
+import com.example.demo.Models.Pacientes;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -10,7 +10,7 @@ import java.net.Socket;
 
 public class Server
 {
-   private ServerSocket serverSocket;
+   private final ServerSocket serverSocket;
    public Server(ServerSocket serverSocket){
        this.serverSocket = serverSocket;
    }
@@ -25,7 +25,7 @@ public class Server
                ObjectOutputStream os = new ObjectOutputStream(socket.getOutputStream());
 
                Pacientes paciente = (Pacientes)is.readObject();
-
+               System.out.println(paciente.getNome());
                ClientHandler clientHandler = new ClientHandler(socket);
                Thread thread = new Thread(clientHandler);
                thread.start();  // Start the thread first
@@ -35,7 +35,7 @@ public class Server
 
 
         } catch (ClassNotFoundException e) {
-           throw new RuntimeException(e);
+           throw new RuntimeException(e.getMessage());
        }
 
    }
@@ -44,7 +44,6 @@ public class Server
        try (ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream())) {
            // Read the Pacientes object from the client
            Pacientes receivedPacientes = (Pacientes) objectInputStream.readObject();
-
            // Process the received object
            processReceivedObject(receivedPacientes);
 
