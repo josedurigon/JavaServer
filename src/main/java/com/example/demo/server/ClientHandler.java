@@ -1,6 +1,7 @@
 package com.example.demo.server;
 
 import com.example.demo.Models.Pacientes;
+import com.example.demo.repository.FilaRepository;
 import com.example.demo.repository.PacienteRepository;
 
 import java.io.IOException;
@@ -12,8 +13,14 @@ public class ClientHandler implements Runnable{
     private Socket socket;
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
-    public ClientHandler(Socket socket){
+    private PacienteRepository pacientesRepo;
+    private FilaRepository filaRepo;
+
+
+    public ClientHandler(Socket socket, PacienteRepository pacientesRepo, FilaRepository filaRepo){
         this.socket = socket;
+        this.filaRepo = filaRepo;
+        this.pacientesRepo = pacientesRepo;
     }
     @Override
     public void run(){
@@ -24,9 +31,13 @@ public class ClientHandler implements Runnable{
             while (true){
                 Pacientes receivedObject = (Pacientes) objectInputStream.readObject();
                 System.out.println("Received object: " + receivedObject.getNome());
-                //processa o objeto
 
-                objectOutputStream.writeObject("Server received" + receivedObject.getNome());
+                //salvar paciente apenas (na coleção Pacientes)
+//                this.salvarPaciente(receivedObject);
+//                this.inserirNaFila(receivedObject);
+
+
+                objectOutputStream.writeObject("Server received. This is server" + receivedObject.getNome());
                 objectOutputStream.flush();
             }
         } catch (IOException | ClassNotFoundException e) {
@@ -34,10 +45,11 @@ public class ClientHandler implements Runnable{
         }
     }
 
-    public boolean insert(Pacientes paciente){
+    public void salvarPaciente(Pacientes pacientes){
+        pacientesRepo.savePaciente(pacientes);
+    }
 
-
-//        PacienteRepository pacienteRepository = new PacienteRepository("Pacientes");
-//        pacienteRepository.insertOne(paciente);
+    public void inserirNaFila(Pacientes pacientes){
+        filaRepo.entrarNaFila(pacientes);
     }
 }

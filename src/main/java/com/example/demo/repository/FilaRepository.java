@@ -1,5 +1,7 @@
 package com.example.demo.repository;
 
+import com.example.demo.Models.Pacientes;
+import com.example.demo.mongo.MongoDb;
 import com.mongodb.*;
 import com.mongodb.bulk.BulkWriteResult;
 import com.mongodb.client.*;
@@ -14,6 +16,22 @@ import org.bson.conversions.Bson;
 import java.util.List;
 
 public class FilaRepository implements MongoCollection {
+
+
+    private final MongoCollection<Document> filaCollection;
+
+    public FilaRepository(MongoCollection<Document> filaCollection) {
+        this.filaCollection = filaCollection;
+    }
+
+    public void entrarNaFila(Pacientes pacientes){
+        Document document = new Document()
+                .append("nome",pacientes.getNome())
+                .append("endereco", pacientes.getEndereco())
+                .append("contato", pacientes.getContato())
+                .append("historico_medico", pacientes.getHistorico_medico());
+        filaCollection.insertOne(document);
+    }
 
     @Override
     public MongoNamespace getNamespace() {

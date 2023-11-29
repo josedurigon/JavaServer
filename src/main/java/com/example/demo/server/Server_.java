@@ -1,6 +1,8 @@
 package com.example.demo.server;
 
 import com.example.demo.Models.Pacientes;
+import com.example.demo.repository.FilaRepository;
+import com.example.demo.repository.PacienteRepository;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +16,9 @@ public class Server_ {
     private Socket socket;
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
+    private PacienteRepository pacienteRepo;
+    private FilaRepository filaRepo;
+
 
 
 
@@ -28,7 +33,7 @@ public class Server_ {
                     //            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                     //            objectInputStream = new ObjectInputStream(socket.getInputStream());
 
-                    Thread clientThread = new Thread(new ClientHandler(socket));
+                    Thread clientThread = new Thread(new ClientHandler(socket, pacienteRepo, filaRepo));
                     clientThread.start();
 
 //                    Pacientes receivedObject = (Pacientes) objectInputStream.readObject();

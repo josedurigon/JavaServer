@@ -21,9 +21,11 @@ public class PacienteRepository implements MongoCollection {
 
 
 
+
     @Autowired
     public PacienteRepository(MongoCollection<Document> pacientesCollection) {
         this.pacientesCollection = pacientesCollection;
+
     }
 
     public void savePaciente(Pacientes pacientes){
@@ -35,7 +37,13 @@ public class PacienteRepository implements MongoCollection {
         pacientesCollection.insertOne(document);
     }
 
-
+    public void entrarNaFila(Pacientes pacientes){
+        Document document = new Document()
+                .append("nome",pacientes.getNome())
+                .append("endereco", pacientes.getEndereco())
+                .append("contato", pacientes.getContato())
+                .append("historico_medico", pacientes.getHistorico_medico());
+    }
     @Override
     public MongoNamespace getNamespace() {
         return null;

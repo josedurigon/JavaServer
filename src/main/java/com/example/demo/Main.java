@@ -2,14 +2,8 @@ package com.example.demo;
 
 import com.example.demo.mongo.MongoDb;
 import com.example.demo.server.Server_;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoDatabase;
-import io.github.cdimascio.dotenv.Dotenv;
-import com.example.demo.server.Server;
 
 import java.io.IOException;
-import java.net.ServerSocket;
 
 
 public class Main {
