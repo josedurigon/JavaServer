@@ -1,8 +1,8 @@
 package com.example.demo.server;
 
 import com.example.demo.Models.Pacientes;
-import com.example.demo.repository.FilaRepository;
-import com.example.demo.repository.PacienteRepository;
+import com.example.demo.mongo.MongoDb;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,15 +16,15 @@ public class Server_ {
     private Socket socket;
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
-    private PacienteRepository pacienteRepo;
-    private FilaRepository filaRepo;
+
 
 
 
 
     public void run(int port) throws IOException, ClassNotFoundException {
         serverSocket = new ServerSocket(port);
-
+        MongoDb mongoDb = new MongoDb("ProjetoIntegradorIV");
+        System.out.println(mongoDb.getDatabase());
         while(true) {
                 if(!serverSocket.isClosed()) {
                     socket = serverSocket.accept();
@@ -33,7 +33,8 @@ public class Server_ {
                     //            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                     //            objectInputStream = new ObjectInputStream(socket.getInputStream());
 
-                    Thread clientThread = new Thread(new ClientHandler(socket, pacienteRepo, filaRepo));
+                    Thread clientThread = new Thread(new ClientHandler(socket, mongoDb));
+
                     clientThread.start();
 
 //                    Pacientes receivedObject = (Pacientes) objectInputStream.readObject();

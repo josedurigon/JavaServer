@@ -1,8 +1,7 @@
 package com.example.demo.server;
 
 import com.example.demo.Models.Pacientes;
-import com.example.demo.repository.FilaRepository;
-import com.example.demo.repository.PacienteRepository;
+
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -12,8 +11,7 @@ import java.net.Socket;
 
 public class Server
 {
-    private PacienteRepository pacientesRepo;
-    private FilaRepository filaRepo;
+
    private final ServerSocket serverSocket;
    public Server(ServerSocket serverSocket){
        this.serverSocket = serverSocket;
@@ -30,9 +28,9 @@ public class Server
 
                Pacientes paciente = (Pacientes)is.readObject();
                System.out.println(paciente.getNome());
-               ClientHandler clientHandler = new ClientHandler(socket,pacientesRepo, filaRepo);
-               Thread thread = new Thread(clientHandler);
-               thread.start();  // Start the thread first
+              // ClientHandler clientHandler = new ClientHandler(socket);
+               //Thread thread = new Thread(clientHandler);
+               //thread.start();  // Start the thread first
 
            }
        }catch (IOException e){
